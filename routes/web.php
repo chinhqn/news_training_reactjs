@@ -14,10 +14,3 @@
 Route::get('/', function () {
     return view('welcome');
 });
-Route::group(['prefix' => 'api'], function () {
-    Route::resource('users', 'UserController');
-});
-
-//gom tat ca cac view ve welcome de react xu ly
-Route::view('/{any}', 'welcome')
-    ->where('any', '.*');
