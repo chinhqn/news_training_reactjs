@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Entities;
+namespace App\Entities\NewsLvReact;
 
 use Illuminate\Database\Eloquent\Model;
 use Prettus\Repository\Contracts\Transformable;
 use Prettus\Repository\Traits\TransformableTrait;
 
 /**
- * Class Post.
+ * Class News.
  *
- * @package namespace App\Entities;
+ * @package namespace App\Entities\NewsLvReact;
  */
-class Post extends Model implements Transformable
+class News extends Model implements Transformable
 {
     use TransformableTrait;
 

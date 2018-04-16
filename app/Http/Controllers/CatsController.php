@@ -7,35 +7,35 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use Prettus\Validator\Contracts\ValidatorInterface;
 use Prettus\Validator\Exceptions\ValidatorException;
-use App\Http\Requests\PostCreateRequest;
-use App\Http\Requests\PostUpdateRequest;
-use App\Repositories\PostRepository;
-use App\Validators\PostValidator;
+use App\Http\Requests\CatCreateRequest;
+use App\Http\Requests\CatUpdateRequest;
+use App\Repositories\CatRepository;
+use App\Validators\CatValidator;
 
 /**
- * Class PostsController.
+ * Class CatsController.
  *
  * @package namespace App\Http\Controllers;
  */
-class PostsController extends Controller
+class CatsController extends Controller
 {
     /**
-     * @var PostRepository
+     * @var CatRepository
      */
     protected $repository;
 
     /**
-     * @var PostValidator
+     * @var CatValidator
      */
     protected $validator;
 
     /**
-     * PostsController constructor.
+     * CatsController constructor.
      *
-     * @param PostRepository $repository
-     * @param PostValidator $validator
+     * @param CatRepository $repository
+     * @param CatValidator $validator
      */
-    public function __construct(PostRepository $repository, PostValidator $validator)
+    public function __construct(CatRepository $repository, CatValidator $validator)
     {
         $this->repository = $repository;
         $this->validator  = $validator;
@@ -49,38 +49,38 @@ class PostsController extends Controller
     public function index()
     {
         $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
-        $posts = $this->repository->all();
+        $cats = $this->repository->all();
 
         if (request()->wantsJson()) {
 
             return response()->json([
-                'data' => $posts,
+                'data' => $cats,
             ]);
         }
 
-        return view('posts.index', compact('posts'));
+        return view('cats.index', compact('cats'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  PostCreateRequest $request
+     * @param  CatCreateRequest $request
      *
      * @return \Illuminate\Http\Response
      *
      * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
-    public function store(PostCreateRequest $request)
+    public function store(CatCreateRequest $request)
     {
         try {
 
             $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_CREATE);
 
-            $post = $this->repository->create($request->all());
+            $cat = $this->repository->create($request->all());
 
             $response = [
-                'message' => 'Post created.',
-                'data'    => $post->toArray(),
+                'message' => 'Cat created.',
+                'data'    => $cat->toArray(),
             ];
 
             if ($request->wantsJson()) {
@@ -110,16 +110,16 @@ class PostsController extends Controller
      */
     public function show($id)
     {
-        $post = $this->repository->find($id);
+        $cat = $this->repository->find($id);
 
         if (request()->wantsJson()) {
 
             return response()->json([
-                'data' => $post,
+                'data' => $cat,
             ]);
         }
 
-        return view('posts.show', compact('post'));
+        return view('cats.show', compact('cat'));
     }
 
     /**
@@ -131,32 +131,32 @@ class PostsController extends Controller
      */
     public function edit($id)
     {
-        $post = $this->repository->find($id);
+        $cat = $this->repository->find($id);
 
-        return view('posts.edit', compact('post'));
+        return view('cats.edit', compact('cat'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  PostUpdateRequest $request
+     * @param  CatUpdateRequest $request
      * @param  string            $id
      *
      * @return Response
      *
      * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
-    public function update(PostUpdateRequest $request, $id)
+    public function update(CatUpdateRequest $request, $id)
     {
         try {
 
             $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_UPDATE);
 
-            $post = $this->repository->update($request->all(), $id);
+            $cat = $this->repository->update($request->all(), $id);
 
             $response = [
-                'message' => 'Post updated.',
-                'data'    => $post->toArray(),
+                'message' => 'Cat updated.',
+                'data'    => $cat->toArray(),
             ];
 
             if ($request->wantsJson()) {
@@ -194,11 +194,11 @@ class PostsController extends Controller
         if (request()->wantsJson()) {
 
             return response()->json([
-                'message' => 'Post deleted.',
+                'message' => 'Cat deleted.',
                 'deleted' => $deleted,
             ]);
         }
 
-        return redirect()->back()->with('message', 'Post deleted.');
+        return redirect()->back()->with('message', 'Cat deleted.');
     }
 }
