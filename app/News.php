@@ -10,6 +10,7 @@ class News extends Model
         'name',
         'preview_text',
         'detail_text',
-        'image'
+        'image',
+        'id_cat'
      ];
 }
