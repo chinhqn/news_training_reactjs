@@ -5,11 +5,11 @@ namespace App\Repositories;
 use Prettus\Repository\Contracts\RepositoryInterface;
 
 /**
- * Interface NewsLvReactRepository.
+ * Interface UserRepository.
  *
  * @package namespace App\Repositories;
  */
-interface NewsLvReactRepository extends RepositoryInterface
+interface UserRepository extends RepositoryInterface
 {
     //
 }

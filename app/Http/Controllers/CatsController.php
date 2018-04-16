@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Cat;
 use App\Http\Requests;
 use Prettus\Validator\Contracts\ValidatorInterface;
 use Prettus\Validator\Exceptions\ValidatorException;
@@ -57,8 +57,8 @@ class CatsController extends Controller
                 'data' => $cats,
             ]);
         }
-
-        return view('cats.index', compact('cats'));
+        return Cat::all();
+        // return view('cats.index', compact('cats'));
     }
 
     /**

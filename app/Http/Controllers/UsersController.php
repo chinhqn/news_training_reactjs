@@ -3,39 +3,39 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\News;
+use App\User;
 use App\Http\Requests;
 use Prettus\Validator\Contracts\ValidatorInterface;
 use Prettus\Validator\Exceptions\ValidatorException;
-use App\Http\Requests\NewsCreateRequest;
-use App\Http\Requests\NewsUpdateRequest;
-use App\Repositories\NewsRepository;
-use App\Validators\NewsValidator;
+use App\Http\Requests\UserCreateRequest;
+use App\Http\Requests\UserUpdateRequest;
+use App\Repositories\UserRepository;
+use App\Validators\UserValidator;
 
 /**
- * Class NewsController.
+ * Class UsersController.
  *
  * @package namespace App\Http\Controllers;
  */
-class NewsController extends Controller
+class UsersController extends Controller
 {
     /**
-     * @var NewsRepository
+     * @var UserRepository
      */
     protected $repository;
 
     /**
-     * @var NewsValidator
+     * @var UserValidator
      */
     protected $validator;
 
     /**
-     * NewsController constructor.
+     * UsersController constructor.
      *
-     * @param NewsRepository $repository
-     * @param NewsValidator $validator
+     * @param UserRepository $repository
+     * @param UserValidator $validator
      */
-    public function __construct(NewsRepository $repository, NewsValidator $validator)
+    public function __construct(UserRepository $repository, UserValidator $validator)
     {
         $this->repository = $repository;
         $this->validator  = $validator;
@@ -49,39 +49,38 @@ class NewsController extends Controller
     public function index()
     {
         $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
-        $news = $this->repository->all();
+        $users = $this->repository->all();
 
         if (request()->wantsJson()) {
 
             return response()->json([
-                'data' => $news,
+                'data' => $users,
             ]);
         }
-
-        return News::all();
-        // return view('news.index', compact('news'));
+        return User::all();
+        // return view('users.index', compact('users'));n 
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  NewsCreateRequest $request
+     * @param  UserCreateRequest $request
      *
      * @return \Illuminate\Http\Response
      *
      * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
-    public function store(NewsCreateRequest $request)
+    public function store(UserCreateRequest $request)
     {
         try {
 
             $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_CREATE);
 
-            $news = $this->repository->create($request->all());
+            $user = $this->repository->create($request->all());
 
             $response = [
-                'message' => 'News created.',
-                'data'    => $news->toArray(),
+                'message' => 'User created.',
+                'data'    => $user->toArray(),
             ];
 
             if ($request->wantsJson()) {
@@ -111,16 +110,16 @@ class NewsController extends Controller
      */
     public function show($id)
     {
-        $news = $this->repository->find($id);
+        $user = $this->repository->find($id);
 
         if (request()->wantsJson()) {
 
             return response()->json([
-                'data' => $news,
+                'data' => $user,
             ]);
         }
 
-        return view('news.show', compact('news'));
+        return view('users.show', compact('user'));
     }
 
     /**
@@ -132,32 +131,32 @@ class NewsController extends Controller
      */
     public function edit($id)
     {
-        $news = $this->repository->find($id);
+        $user = $this->repository->find($id);
 
-        return view('news.edit', compact('news'));
+        return view('users.edit', compact('user'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  NewsUpdateRequest $request
+     * @param  UserUpdateRequest $request
      * @param  string            $id
      *
      * @return Response
      *
      * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
-    public function update(NewsUpdateRequest $request, $id)
+    public function update(UserUpdateRequest $request, $id)
     {
         try {
 
             $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_UPDATE);
 
-            $news = $this->repository->update($request->all(), $id);
+            $user = $this->repository->update($request->all(), $id);
 
             $response = [
-                'message' => 'News updated.',
-                'data'    => $news->toArray(),
+                'message' => 'User updated.',
+                'data'    => $user->toArray(),
             ];
 
             if ($request->wantsJson()) {
@@ -195,11 +194,11 @@ class NewsController extends Controller
         if (request()->wantsJson()) {
 
             return response()->json([
-                'message' => 'News deleted.',
+                'message' => 'User deleted.',
                 'deleted' => $deleted,
             ]);
         }
 
-        return redirect()->back()->with('message', 'News deleted.');
+        return redirect()->back()->with('message', 'User deleted.');
     }
 }
