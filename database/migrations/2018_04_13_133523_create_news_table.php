@@ -21,6 +21,7 @@ class CreateNewsTable extends Migration
 			$table->string('preview_text');
 			$table->text('detail_text');
 			$table->string('image');
+			$table->integer('id_cat');
             $table->timestamps();
 		});
 	}
