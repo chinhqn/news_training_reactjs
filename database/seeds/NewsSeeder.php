@@ -19,11 +19,12 @@ class NewsSeeder extends Seeder
         for($i = 1; $i < 20; $i++){
             \App\News::create([
                 'name' => $faker->title,
-                'preview_text' => $faker->text,
+                'preview_text' => $faker->title,
                 'detail_text' => $faker->text ,
                 'image' => $faker->name,
                 'id_cat' => array_rand($cat),
             ]);
         }
+
     }
 }
