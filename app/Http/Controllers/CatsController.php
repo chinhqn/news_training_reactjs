@@ -60,12 +60,14 @@ class CatsController extends Controller
      *
      * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
-    public function store(CatCreateRequest $request)
+    public function store(Request $request)
     {
         $data = $request->all();
-        Cat::create($data);
-        return response()->json(Cat::all());
-//        return response()->json(['success'=>'Save successfully']);
+        $cat = Cat::create($data);
+        return response()->json([
+            'data' => $cat,
+            'message' => 'Save successfully !'
+        ]);
     }
 
     /**
