@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Cat;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -57,8 +57,8 @@ class CatsController extends Controller
                 'data' => $cats,
             ]);
         }
-
-        return view('cats.index', compact('cats'));
+        return Cat::all();
+        // return view('cats.index', compact('cats'));
     }
 
     /**
