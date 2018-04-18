@@ -62,6 +62,11 @@ class NewsController extends Controller
         // return view('news.index', compact('news'));
     }
 
+    public function getNews (){
+        $news = News::orderBy('id','DESC')->limit(5)->get();
+        return response()->json($news,200);
+    }
+
     /**
      * Store a newly created resource in storage.
      *
