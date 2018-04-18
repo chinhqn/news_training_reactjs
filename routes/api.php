@@ -24,10 +24,7 @@ Route::resource('news', NewsController::class);
 
 
 
-
-Route::resource('user', UsersController::class);
-Route::resource('news', NewsController::class);
-Route::resource('cat', CatsController::class);
-
 Route::get('get-news','NewsController@getNews');
+
+
 

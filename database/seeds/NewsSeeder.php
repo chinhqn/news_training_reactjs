@@ -15,16 +15,19 @@ class NewsSeeder extends Seeder
         if (Schema::hasTable('news')) {
             DB::table('news')->truncate();
         }
-        $cat = \App\Cat::select('id')->get()->toArray();
-        for($i = 1; $i < 20; $i++){
-            \App\News::create([
-                'name' => $faker->title,
-                'preview_text' => $faker->title,
-                'detail_text' => $faker->text ,
-                'image' => $faker->name,
-                'id_cat' => array_rand($cat),
-            ]);
+        $cats = \App\Cat::all();
+        foreach ($cats as $cat){
+            for($i = 1; $i < 15; $i++){
+                \App\News::create([
+                    'name' => $faker->name,
+                    'preview_text' => $faker->sentence(2,true),
+                    'detail_text' => $faker->text ,
+                    'image' =>  $faker->imageUrl(300,300,null,true),
+                    'id_cat' => $cat->id,
+                ]);
+            }
         }
+
 
     }
 }

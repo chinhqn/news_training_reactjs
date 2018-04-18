@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Cat;
+use App\News;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use Prettus\Validator\Contracts\ValidatorInterface;
@@ -59,7 +60,7 @@ class CatsController extends Controller
 //        }
 //
         // return view('cats.index', compact('cats'));
-        $cate = Cat::with('news')->get();
+        $cate = Cat::with('news')->orderBy('id','DESC')->get();
         return response()->json($cate,200);
 
     }
@@ -113,9 +114,10 @@ class CatsController extends Controller
      */
     public function edit($id)
     {
-        $cat = $this->repository->find($id);
-
-        return view('cats.edit', compact('cat'));
+//        $cat = $this->repository->find($id);
+//        return view('cats.edit', compact('cat'));
+        $cat = Cat::findOrFail($id);
+        return response()->json($cat);
     }
 
     /**
@@ -128,37 +130,12 @@ class CatsController extends Controller
      *
      * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
-    public function update(CatUpdateRequest $request, $id)
+    public function update(Request $request, $id)
     {
-        try {
-
-            $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_UPDATE);
-
-            $cat = $this->repository->update($request->all(), $id);
-
-            $response = [
-                'message' => 'Cat updated.',
-                'data'    => $cat->toArray(),
-            ];
-
-            if ($request->wantsJson()) {
-
-                return response()->json($response);
-            }
-
-            return redirect()->back()->with('message', $response['message']);
-        } catch (ValidatorException $e) {
-
-            if ($request->wantsJson()) {
-
-                return response()->json([
-                    'error'   => true,
-                    'message' => $e->getMessageBag()
-                ]);
-            }
-
-            return redirect()->back()->withErrors($e->getMessageBag())->withInput();
-        }
+        $cat = Cat::findOrFail($id);
+        $data = $request->all();
+        $cat->update($data);
+        return response()->json($cat);
     }
 
 
