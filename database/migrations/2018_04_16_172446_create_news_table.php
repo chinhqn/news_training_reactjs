@@ -20,16 +20,13 @@ class CreateNewsTable extends Migration
 			$table->string('name');
 			$table->string('preview_text');
 			$table->text('detail_text');
-			
+
+			$table->string('image');
+			$table->integer('id_cat')->unsigned();
+            $table->foreign('id_cat')->references('id')->on('cats')->onDelete('cascade');
+
             $table->timestamps();
 		});
-		Schema::table('news', function (Blueprint $table) {
-			$table->integer('id_cat')->unsigned();
-			$table->integer('id_user')->unsigned();
-			$table->foreign('id_cat')->references('id')->on('cats')->onDelete('cascade');
-			
-			$table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');
-		});	
 	}
 
 	/**

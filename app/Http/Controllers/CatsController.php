@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Cat;
+use App\News;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use Prettus\Validator\Contracts\ValidatorInterface;
@@ -47,17 +48,21 @@ class CatsController extends Controller
      */
     public function index()
     {
-        $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
-        $cats = $this->repository->all();
 
-        if (request()->wantsJson()) {
-
-            return response()->json([
-                'data' => $cats,
-            ]);
-        }
-        return Cat::all();
+//        $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
+//        $cats = $this->repository->all();
+//
+//        if (request()->wantsJson()) {
+//
+//            return response()->json([
+//                'data' => $cats,
+//            ]);
+//        }
+//
         // return view('cats.index', compact('cats'));
+        $cate = Cat::with('news')->orderBy('id','DESC')->get();
+        return response()->json($cate,200);
+
     }
 
     /**
@@ -69,35 +74,14 @@ class CatsController extends Controller
      *
      * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
-    public function store(CatCreateRequest $request)
+    public function store(Request $request)
     {
-        try {
-
-            $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_CREATE);
-
-            $cat = $this->repository->create($request->all());
-
-            $response = [
-                'message' => 'Cat created.',
-                'data'    => $cat->toArray(),
-            ];
-
-            if ($request->wantsJson()) {
-
-                return response()->json($response);
-            }
-
-            return redirect()->back()->with('message', $response['message']);
-        } catch (ValidatorException $e) {
-            if ($request->wantsJson()) {
-                return response()->json([
-                    'error'   => true,
-                    'message' => $e->getMessageBag()
-                ]);
-            }
-
-            return redirect()->back()->withErrors($e->getMessageBag())->withInput();
-        }
+        $data = $request->all();
+        $cat = Cat::create($data);
+        return response()->json([
+            'data' => $cat,
+            'message' => 'Save successfully !'
+        ]);
     }
 
     /**
@@ -130,9 +114,10 @@ class CatsController extends Controller
      */
     public function edit($id)
     {
-        $cat = $this->repository->find($id);
-
-        return view('cats.edit', compact('cat'));
+//        $cat = $this->repository->find($id);
+//        return view('cats.edit', compact('cat'));
+        $cat = Cat::findOrFail($id);
+        return response()->json($cat);
     }
 
     /**
@@ -145,37 +130,12 @@ class CatsController extends Controller
      *
      * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
-    public function update(CatUpdateRequest $request, $id)
+    public function update(Request $request, $id)
     {
-        try {
-
-            $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_UPDATE);
-
-            $cat = $this->repository->update($request->all(), $id);
-
-            $response = [
-                'message' => 'Cat updated.',
-                'data'    => $cat->toArray(),
-            ];
-
-            if ($request->wantsJson()) {
-
-                return response()->json($response);
-            }
-
-            return redirect()->back()->with('message', $response['message']);
-        } catch (ValidatorException $e) {
-
-            if ($request->wantsJson()) {
-
-                return response()->json([
-                    'error'   => true,
-                    'message' => $e->getMessageBag()
-                ]);
-            }
-
-            return redirect()->back()->withErrors($e->getMessageBag())->withInput();
-        }
+        $cat = Cat::findOrFail($id);
+        $data = $request->all();
+        $cat->update($data);
+        return response()->json($cat);
     }
 
 
@@ -188,16 +148,8 @@ class CatsController extends Controller
      */
     public function destroy($id)
     {
-        $deleted = $this->repository->delete($id);
-
-        if (request()->wantsJson()) {
-
-            return response()->json([
-                'message' => 'Cat deleted.',
-                'deleted' => $deleted,
-            ]);
-        }
-
-        return redirect()->back()->with('message', 'Cat deleted.');
+        $cat = Cat::findOrFail($id);
+        $cat->delete();
+        return response()->json($cat);
     }
 }
