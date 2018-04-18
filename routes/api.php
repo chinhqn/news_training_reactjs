@@ -18,5 +18,13 @@ header('Access-Control-Allow-Methods: GET, PUT, POST, DELETE, OPTIONS');
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
 Route::resource('cats', CatsController::class);
 Route::resource('news', NewsController::class);
+
+
+
+Route::get('get-news','NewsController@getNews');
+
+
+

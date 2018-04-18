@@ -7,11 +7,11 @@ use Prettus\Repository\Contracts\Transformable;
 use Prettus\Repository\Traits\TransformableTrait;
 
 /**
- * Class Cat.
+ * Class News.
  *
  * @package namespace App\Entities;
  */
-class Cat extends Model implements Transformable
+class News extends Model implements Transformable
 {
     use TransformableTrait;
 
@@ -20,8 +20,6 @@ class Cat extends Model implements Transformable
      *
      * @var array
      */
+    protected $fillable = [];
 
-    protected $fillable = [
-		'name',
-	];
 }

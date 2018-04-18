@@ -6,11 +6,11 @@ use \Prettus\Validator\Contracts\ValidatorInterface;
 use \Prettus\Validator\LaravelValidator;
 
 /**
- * Class NewsValidator.
+ * Class UserValidator.
  *
  * @package namespace App\Validators;
  */
-class NewsValidator extends LaravelValidator
+class UserValidator extends LaravelValidator
 {
     /**
      * Validation Rules
@@ -19,5 +19,6 @@ class NewsValidator extends LaravelValidator
      */
     protected $rules = [
         ValidatorInterface::RULE_CREATE => [],
+        ValidatorInterface::RULE_UPDATE => [],
     ];
 }

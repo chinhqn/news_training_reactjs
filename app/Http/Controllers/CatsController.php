@@ -1,9 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use Illuminate\Http\Request;
 use App\Cat;
+use App\News;
+use Illuminate\Http\Request;
 use App\Http\Requests;
 use Prettus\Validator\Contracts\ValidatorInterface;
 use Prettus\Validator\Exceptions\ValidatorException;
@@ -48,7 +48,21 @@ class CatsController extends Controller
      */
     public function index()
     {
-        return response()->json(Cat::all());
+
+//        $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
+//        $cats = $this->repository->all();
+//
+//        if (request()->wantsJson()) {
+//
+//            return response()->json([
+//                'data' => $cats,
+//            ]);
+//        }
+//
+        // return view('cats.index', compact('cats'));
+        $cate = Cat::with('news')->orderBy('id','DESC')->get();
+        return response()->json($cate,200);
+
     }
 
     /**

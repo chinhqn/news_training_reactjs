@@ -20,9 +20,11 @@ class CreateNewsTable extends Migration
 			$table->string('name');
 			$table->string('preview_text');
 			$table->text('detail_text');
+
 			$table->string('image');
 			$table->integer('id_cat')->unsigned();
             $table->foreign('id_cat')->references('id')->on('cats')->onDelete('cascade');
+
             $table->timestamps();
 		});
 	}

@@ -7,9 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class Cat extends Model
 {
     protected $fillable = [
-        'name',
-     ];
+
+        'name'
+    ];
     public function news(){
-        return $this->hasMany('App\New','id_cat','id');
+        return $this->hasMany('App\News','id_cat','id');
     }
 }
+    
