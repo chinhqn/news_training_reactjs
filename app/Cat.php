@@ -10,6 +10,6 @@ class Cat extends Model
         'name',
      ];
     public function news(){
-        return $this->hasMany('App\News','id_cat','id');
+        return $this->hasMany('App\New','id_cat','id');
     }
 }
