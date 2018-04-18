@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\News;
 use Illuminate\Http\Request;
-
+use App\Cat;
 use App\Http\Requests;
 use Prettus\Validator\Contracts\ValidatorInterface;
 use Prettus\Validator\Exceptions\ValidatorException;
@@ -50,9 +50,24 @@ class NewsController extends Controller
     public function index()
     {
         $news = News::with('cat')->get();
-        return response()->json($news);
+
+        return response()->json([$news]);
     }
 
+    /**
+     * Create a newly created resource in storage.
+     *
+     * @param  NewsCreateRequest $request
+     *
+     * @return \Illuminate\Http\Response
+     *
+     * @throws \Prettus\Validator\Exceptions\ValidatorException
+     */
+    public function create()
+    {
+        $cats = Cat::all();
+        return response()->json(['cats'=>$cats]);
+    }
     /**
      * Store a newly created resource in storage.
      *
