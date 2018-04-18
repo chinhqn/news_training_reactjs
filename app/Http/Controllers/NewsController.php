@@ -4,10 +4,7 @@ namespace App\Http\Controllers;
 
 use App\News;
 use Illuminate\Http\Request;
-<<<<<<< HEAD
 use App\Cat;
-=======
->>>>>>> 1dc8ca8d49ef396645921573d9515e54aa80c6ba
 use App\Http\Requests;
 use Prettus\Validator\Contracts\ValidatorInterface;
 use Prettus\Validator\Exceptions\ValidatorException;
@@ -53,10 +50,7 @@ class NewsController extends Controller
     public function index()
     {
         $news = News::with('cat')->get();
-<<<<<<< HEAD
 
-        return response()->json([$news]);
-=======
         return response()->json($news);
 
     }
@@ -64,7 +58,6 @@ class NewsController extends Controller
     public function getNews (){
         $news = News::orderBy('id','DESC')->limit(5)->get();
         return response()->json($news);
->>>>>>> 1dc8ca8d49ef396645921573d9515e54aa80c6ba
     }
 
     /**
