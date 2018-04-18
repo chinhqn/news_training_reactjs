@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 use App\Cat;
 use Illuminate\Http\Request;
-use App\Cat;
 use App\Http\Requests;
 use Prettus\Validator\Contracts\ValidatorInterface;
 use Prettus\Validator\Exceptions\ValidatorException;
