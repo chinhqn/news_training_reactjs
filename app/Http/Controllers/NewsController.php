@@ -36,11 +36,11 @@ class NewsController extends Controller
 //     * @param NewsRepository $repository
 //     * @param NewsValidator $validator
 //     */
-//    public function __construct(NewsRepository $repository, NewsValidator $validator)
-//    {
-//        $this->repository = $repository;
-//        $this->validator  = $validator;
-//    }
+    public function __construct(NewsRepository $repository, NewsValidator $validator)
+    {
+        $this->repository = $repository;
+        $this->validator  = $validator;
+    }
 
     /**
      * Display a listing of the resource.
@@ -56,7 +56,7 @@ class NewsController extends Controller
     }
 
     public function getNews (){
-        $news = News::orderBy('id','DESC')->limit(5)->get();
+        $news = News::orderBy('id','DESC')->limit(7)->get();
         return response()->json($news);
     }
 
@@ -97,7 +97,10 @@ class NewsController extends Controller
      */
     public function show($id)
     {
-
+        $new = $this->repository->find($id);
+        return response()->json($new,200);
+//        $new = News::find($id);
+//        return response()->json($new,200);
     }
 
     /**
