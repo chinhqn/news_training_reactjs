@@ -56,7 +56,7 @@ class NewsController extends Controller
     }
 
     public function getNews (){
-        $news = News::orderBy('id','DESC')->limit(7)->get();
+        $news = News::orderBy('id','DESC')->limit(9)->get();
         return response()->json($news);
     }
 
