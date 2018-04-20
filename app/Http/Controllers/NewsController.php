@@ -85,8 +85,22 @@ class NewsController extends Controller
      */
     public function store(Request $request)
     {
-
+        $storage =  config('app.url').'/uploads/images/news/';
+        $news = new News();
+        $news->name = $request->name;
+        $news->preview_text = $request->preview_text;
+        $news->detail_text = $request->detail_text;
+        $news->id_cat = $request->id_cat;
+        if($request->hasFile('image')){
+            $image = $request->file('image'); //get image file
+            $image_name =  $storage.time().'_'.$image->getClientOriginalName(); // get name image
+            $image->move('uploads/images/news',$image_name);
+            $news->image=$image_name;
+            $news->save();
+            return response()->json($news);
+        }
     }
+
 
     /**
      * Display the specified resource.
@@ -112,6 +126,9 @@ class NewsController extends Controller
      */
     public function edit($id)
     {
+        $news = News::findOrFail($id);
+        $cats = Cat::all();
+        return response()->json([$news,$cats]);
 
     }
 
@@ -128,6 +145,20 @@ class NewsController extends Controller
     public function update(Request $request, $id)
     {
 
+        $storage =  config('app.url').'/uploads/images/news/';
+        $news = News::find($id);
+        $news->name = $request->name;
+        $news->preview_text = $request->preview_text;
+        $news->detail_text = $request->detail_text;
+        $news->id_cat = $request->id_cat;
+        if($request->hasFile('image')){
+            $image = $request->file('image'); //get image file
+            $image_name =  $storage.time().'_'.$image->getClientOriginalName(); // get name image
+            $image->move('uploads/images/news',$image_name);
+            $news->image=$image_name;
+        }
+        $news->save();
+        return response()->json($news);
     }
 
 

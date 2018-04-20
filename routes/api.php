@@ -21,6 +21,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::resource('cats', CatsController::class);
 Route::resource('news', NewsController::class);
+Route::post('news/{id}','NewsController@update');
 
 Route::resource('user', UsersController::class);
 // Route::resource('cat', CatsController::class);
