@@ -60,7 +60,7 @@ class CatsController extends Controller
 //        }
 //
         // return view('cats.index', compact('cats'));
-        $cate = Cat::with('news')->orderBy('id','DESC')->get();
+        $cate = Cat::with('news')->get();
         return response()->json($cate,200);
 
     }

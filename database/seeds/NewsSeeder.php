@@ -20,8 +20,8 @@ class NewsSeeder extends Seeder
             for($i = 1; $i < 15; $i++){
                 \App\News::create([
                     'name' => $faker->name,
-                    'preview_text' => $faker->sentence(2,true),
-                    'detail_text' => $faker->text ,
+                    'preview_text' => $faker->sentence(10,true),
+                    'detail_text' => $faker->sentence(200,true),
                     'image' =>  $faker->imageUrl(300,300,null,true),
                     'id_cat' => $cat->id,
                 ]);
